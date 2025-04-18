@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panier - L'AS Beauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+tailwind.config={
+theme:{
+extend:{
+colors:{
+primary:'#c8a97e',
+secondary:'#1a1a1a'
+},
+borderRadius:{
+'none':'0px',
+'sm':'4px',
+DEFAULT:'8px',
+'md':'12px',
+'lg':'16px',
+'xl':'20px',
+'2xl':'24px',
+'3xl':'32px',
+'full':'9999px',
+'button':'8px'
+}
+}
+}
+}
+</script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+
+body {
+font-family: 'Poppins', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+font-family: 'Playfair Display', serif;
+}
+
+.logo {
+font-family: 'Pacifico', serif;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+.quantity-input {
+width: 40px;
+text-align: center;
+border: none;
+background: transparent;
+font-weight: 500;
+}
+
+.cart-item {
+transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.cart-item.removing {
+opacity: 0;
+transform: translateX(100px);
+}
+
+.promo-code {
+transition: all 0.3s ease;
+}
+
+.promo-code.valid {
+border-color: #10B981;
+}
+
+.promo-code.invalid {
+border-color: #EF4444;
+}
+</style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Header -->
+<header class="w-full bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+<div class="container mx-auto px-4 py-4 flex items-center justify-between">
+<div class="flex-1 flex justify-start">
+<a href="index.html" class="text-secondary hover:text-primary transition-colors flex items-center gap-2">
+<i class="ri-arrow-left-line"></i>
+<span>Retour</span>
+</a>
+</div>
+<div class="flex-1 flex justify-center">
+<a href="index.html" class="logo text-3xl font-bold text-secondary">L'AS Beauty</a>
+</div>
+<div class="flex-1"></div>
+</div>
+</header>
+
+<!-- Main Content -->
+<main class="pt-24 pb-16">
+<div class="container mx-auto px-4">
+<h1 class="text-3xl font-bold text-secondary mb-8">Votre Panier</h1>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Cart Items -->
+<div class="lg:col-span-2">
+<div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+<!-- Cart Item 1 -->
+<div class="cart-item flex items-center gap-4 pb-6 border-b">
+<img src="https://readdy.ai/api/search-image?query=Elegant%20tall%20perfume%20bottle%20with%20gold%20cap%20on%20a%20light%20beige%20background.%20The%20bottle%20has%20a%20sophisticated%20shape%20with%20a%20clear%20glass%20body%20containing%20amber-colored%20liquid.%20The%20image%20has%20a%20luxurious%20and%20refined%20atmosphere%20with%20soft%20lighting%20and%20professional%20product%20photography%20style.&width=200&height=200&seq=17&orientation=squarish" alt="Élégance Dorée" class="w-20 h-20 object-cover rounded">
+<div class="flex-1">
+<h3 class="font-bold text-secondary">Élégance Dorée</h3>
+<p class="text-sm text-gray-500">Eau de Parfum - 50ml</p>
+<div class="flex items-center gap-4 mt-2">
+<div class="flex items-center border rounded">
+<button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors decrease-quantity">-</button>
+<input type="number" value="1" min="1" class="quantity-input">
+<button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors increase-quantity">+</button>
+</div>
+<button class="text-red-500 hover:text-red-600 transition-colors remove-item">
+<i class="ri-delete-bin-line"></i>
+</button>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-secondary">89,00 €</p>
+</div>
+</div>
+
+<!-- Cart Item 2 -->
+<div class="cart-item flex items-center gap-4 py-6 border-b">
+<img src="https://readdy.ai/api/search-image?query=Modern%20square%20perfume%20bottle%20with%20black%20cap%20on%20a%20dark%20gray%20background.%20The%20bottle%20has%20a%20contemporary%20geometric%20shape%20with%20a%20clear%20glass%20body%20containing%20light%20blue%20liquid.%20The%20image%20has%20a%20luxurious%20and%20sophisticated%20atmosphere%20with%20dramatic%20lighting%20and%20professional%20product%20photography%20style.&width=200&height=200&seq=18&orientation=squarish" alt="Mystère Azur" class="w-20 h-20 object-cover rounded">
+<div class="flex-1">
+<h3 class="font-bold text-secondary">Mystère Azur</h3>
+<p class="text-sm text-gray-500">Eau de Toilette - 100ml</p>
+<div class="flex items-center gap-4 mt-2">
+<div class="flex items-center border rounded">
+<button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors decrease-quantity">-</button>
+<input type="number" value="1" min="1" class="quantity-input">
+<button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors increase-quantity">+</button>
+</div>
+<button class="text-red-500 hover:text-red-600 transition-colors remove-item">
+<i class="ri-delete-bin-line"></i>
+</button>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-secondary">75,00 €</p>
+</div>
+</div>
+
+<!-- Cart Item 3 -->
+<div class="cart-item flex items-center gap-4 pt-6">
+<img src="https://readdy.ai/api/search-image?query=Luxurious%20round%20perfume%20bottle%20with%20crystal-like%20cap%20on%20a%20soft%20gold%20background.%20The%20bottle%20has%20an%20ornate%20design%20with%20a%20clear%20glass%20body%20containing%20rose-colored%20liquid.%20The%20image%20has%20a%20luxurious%20and%20romantic%20atmosphere%20with%20warm%20lighting%20and%20professional%20product%20photography%20style.&width=200&height=200&seq=19&orientation=squarish" alt="Rose Éternelle" class="w-20 h-20 object-cover rounded">
+<div class="flex-1">
+<h3 class="font-bold text-secondary">Rose Éternelle</h3>
+<p class="text-sm text-gray-500">Eau de Parfum - 75ml</p>
+<div class="flex items-center gap-4 mt-2">
+<div class="flex items-center border rounded">
+<button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors decrease-quantity">-</button>
+<input type="number" value="1" min="1" class="quantity-input">
+<button class="px-3 py-1 text-gray-600 hover:text-primary transition-colors increase-quantity">+</button>
+</div>
+<button class="text-red-500 hover:text-red-600 transition-colors remove-item">
+<i class="ri-delete-bin-line"></i>
+</button>
+</div>
+</div>
+<div class="text-right">
+<p class="font-bold text-secondary">95,00 €</p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Order Summary -->
+<div class="lg:col-span-1">
+<div class="bg-white rounded-lg shadow-sm p-6 sticky top-24">
+<h2 class="text-xl font-bold text-secondary mb-6">Récapitulatif</h2>
+
+<!-- Promo Code -->
+<div class="mb-6">
+<label class="block text-sm font-medium text-gray-700 mb-2">Code promo</label>
+<div class="flex gap-2">
+<input type="text" class="promo-code flex-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Entrez votre code">
+<button class="bg-primary text-white px-4 py-2 font-medium !rounded-button hover:bg-opacity-90 transition-all whitespace-nowrap">Appliquer</button>
+</div>
+</div>
+
+<!-- Summary Details -->
+<div class="space-y-3 mb-6">
+<div class="flex justify-between text-gray-600">
+<span>Sous-total</span>
+<span>259,00 €</span>
+</div>
+<div class="flex justify-between text-gray-600">
+<span>Livraison</span>
+<span>Gratuite</span>
+</div>
+<div class="flex justify-between text-gray-600">
+<span>TVA (20%)</span>
+<span>51,80 €</span>
+</div>
+<div class="flex justify-between font-bold text-secondary pt-3 border-t">
+<span>Total</span>
+<span>310,80 €</span>
+</div>
+</div>
+
+<!-- Checkout Button -->
+<button class="w-full bg-primary text-white py-3 font-medium !rounded-button hover:bg-opacity-90 transition-all">
+Passer la commande
+</button>
+
+<!-- Secure Payment -->
+<div class="mt-6">
+<div class="flex items-center justify-center gap-2 text-gray-500 text-sm mb-4">
+<i class="ri-lock-line"></i>
+<span>Paiement 100% sécurisé</span>
+</div>
+<div class="flex justify-center gap-3">
+<i class="ri-visa-fill text-2xl text-gray-400"></i>
+<i class="ri-mastercard-fill text-2xl text-gray-400"></i>
+<i class="ri-paypal-fill text-2xl text-gray-400"></i>
+<i class="ri-apple-fill text-2xl text-gray-400"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-white border-t">
+<div class="container mx-auto px-4 py-6">
+<div class="flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-gray-500 text-sm">© 2025 L'AS Beauty. Tous droits réservés.</p>
+<div class="flex gap-6">
+<a href="#" class="text-gray-500 text-sm hover:text-primary transition-colors">Conditions générales</a>
+<a href="#" class="text-gray-500 text-sm hover:text-primary transition-colors">Politique de confidentialité</a>
+<a href="#" class="text-gray-500 text-sm hover:text-primary transition-colors">Mentions légales</a>
+</div>
+</div>
+</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Quantity controls
+document.querySelectorAll('.decrease-quantity').forEach(button => {
+button.addEventListener('click', function() {
+const input = this.nextElementSibling;
+const currentValue = parseInt(input.value);
+if (currentValue > 1) {
+input.value = currentValue - 1;
+updateTotals();
+}
+});
+});
+
+document.querySelectorAll('.increase-quantity').forEach(button => {
+button.addEventListener('click', function() {
+const input = this.previousElementSibling;
+input.value = parseInt(input.value) + 1;
+updateTotals();
+});
+});
+
+document.querySelectorAll('.quantity-input').forEach(input => {
+input.addEventListener('change', function() {
+if (this.value < 1) this.value = 1;
+updateTotals();
+});
+});
+
+// Remove item
+document.querySelectorAll('.remove-item').forEach(button => {
+button.addEventListener('click', function() {
+const cartItem = this.closest('.cart-item');
+cartItem.classList.add('removing');
+setTimeout(() => {
+cartItem.remove();
+updateTotals();
+}, 300);
+});
+});
+
+// Promo code validation
+const promoInput = document.querySelector('.promo-code');
+const promoButton = promoInput.nextElementSibling;
+
+promoButton.addEventListener('click', function() {
+const code = promoInput.value.trim().toUpperCase();
+if (code === 'WELCOME10') {
+promoInput.classList.remove('invalid');
+promoInput.classList.add('valid');
+updateTotals(true);
+} else {
+promoInput.classList.remove('valid');
+promoInput.classList.add('invalid');
+}
+});
+
+function updateTotals(hasPromo = false) {
+let subtotal = 0;
+document.querySelectorAll('.cart-item').forEach(item => {
+const price = parseFloat(item.querySelector('.text-secondary').textContent.replace('€', '').trim());
+const quantity = parseInt(item.querySelector('.quantity-input').value);
+subtotal += price * quantity;
+});
+
+const tva = subtotal * 0.20;
+let total = subtotal + tva;
+
+if (hasPromo) {
+total = total * 0.9; // 10% discount
+}
+
+document.querySelector('.text-gray-600:nth-child(1) span:last-child').textContent = subtotal.toFixed(2) + ' €';
+document.querySelector('.text-gray-600:nth-child(3) span:last-child').textContent = tva.toFixed(2) + ' €';
+document.querySelector('.font-bold.text-secondary span:last-child').textContent = total.toFixed(2) + ' €';
+}
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nos Parfums - L'AS Beauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#c8a97e',
+        secondary: '#1a1a1a'
+      },
+      borderRadius: {
+        'none': '0px',
+        'sm': '4px',
+        DEFAULT: '8px',
+        'md': '12px',
+        'lg': '16px',
+        'xl': '20px',
+        '2xl': '24px',
+        '3xl': '32px',
+        'full': '9999px',
+        'button': '8px'
+      }
+    }
+  }
+}
+</script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+
+#cart-count {
+  transition: transform 0.2s ease;
+}
+
+#notification-container {
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.add-to-cart-btn:active {
+  transform: scale(0.95);
+}
+body {
+font-family: 'Poppins', sans-serif;
+}
+h1, h2, h3, h4, h5 {
+font-family: 'Playfair Display', serif;
+}
+.logo {
+font-family: 'Pacifico', serif;
+}
+.product-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+.product-card {
+transition: all 0.3s ease;
+}
+.filter-button.active {
+background-color: #c8a97e;
+color: white;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+@keyframes addToCart {
+0% {
+transform: scale(1);
+opacity: 1;
+}
+100% {
+transform: scale(0);
+opacity: 0;
+}
+}
+.cart-animation {
+animation: addToCart 0.8s ease-in-out forwards;
+}
+</style>
+</head>
+<body class="bg-white">
+<!-- Header -->
+<header class="w-full bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+<div class="container mx-auto px-4 py-4 flex items-center justify-between">
+<!-- Logo -->
+<div class="flex-1 flex justify-start">
+<div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white cursor-pointer">
+<i class="ri-search-line ri-lg"></i>
+</div>
+</div>
+<!-- Center Logo -->
+<div class="flex-1 flex justify-center">
+<a href="index.html" class="logo text-3xl font-bold text-secondary">L'AS Beauty</a>
+</div>
+<!-- Right Icons -->
+<div class="flex-1 flex justify-end gap-4">
+<div class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 cursor-pointer">
+<i class="ri-user-line ri-lg"></i>
+</div>
+<a href="panier.html">
+<div id="cart-icon" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 cursor-pointer relative">
+<i class="ri-shopping-bag-line ri-lg"></i>
+<span id="cart-count" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
+</div>
+</a>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="container mx-auto px-4 py-3 border-t border-gray-100">
+<ul class="flex justify-center space-x-10">
+<li><a href="index.html" class="text-secondary hover:text-primary font-medium transition-colors">Accueil</a></li>
+<li><a href="#" class="text-primary font-medium transition-colors">Parfums</a></li>
+<li><a href="#" class="text-secondary hover:text-primary font-medium transition-colors">Collections</a></li>
+<li><a href="#" class="text-secondary hover:text-primary font-medium transition-colors">À propos</a></li>
+<li><a href="#" class="text-secondary hover:text-primary font-medium transition-colors">Contact</a></li>
+</ul>
+</nav>
+</header>
+<!-- Main Content -->
+<main class="pt-32">
+<!-- Page Title -->
+<section class="bg-gray-50 py-12">
+<div class="container mx-auto px-4">
+<h1 class="text-4xl md:text-5xl font-bold text-secondary text-center mb-4">Nos Parfums</h1>
+<p class="text-gray-600 text-center max-w-2xl mx-auto">Découvrez notre collection exclusive de parfums de luxe, créée pour éveiller vos sens et sublimer votre personnalité.</p>
+</div>
+</section>
+<!-- Filters Section -->
+<section class="py-8 border-b">
+<div class="container mx-auto px-4">
+<div class="flex flex-wrap gap-4 justify-center">
+<button class="filter-button active px-6 py-2 rounded-full border border-primary text-sm font-medium transition-all whitespace-nowrap">Tous les parfums</button>
+<button class="filter-button px-6 py-2 rounded-full border border-gray-200 text-sm font-medium hover:border-primary transition-all whitespace-nowrap">Pour Elle</button>
+<button class="filter-button px-6 py-2 rounded-full border border-gray-200 text-sm font-medium hover:border-primary transition-all whitespace-nowrap">Pour Lui</button>
+<button class="filter-button px-6 py-2 rounded-full border border-gray-200 text-sm font-medium hover:border-primary transition-all whitespace-nowrap">Unisexe</button>
+<button class="filter-button px-6 py-2 rounded-full border border-gray-200 text-sm font-medium hover:border-primary transition-all whitespace-nowrap">Collections Limitées</button>
+</div>
+</div>
+</section>
+<!-- Products Grid -->
+<section class="py-12">
+<div class="container mx-auto px-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Product 1 -->
+<div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Elegant%20tall%20perfume%20bottle%20with%20gold%20cap%20on%20a%20light%20beige%20background.%20The%20bottle%20has%20a%20sophisticated%20shape%20with%20a%20clear%20glass%20body%20containing%20amber-colored%20liquid.%20The%20image%20has%20a%20luxurious%20and%20refined%20atmosphere%20with%20soft%20lighting%20and%20professional%20product%20photography%20style.%20High-end%20fashion%20photography%20with%20perfect%20lighting.&width=500&height=600&seq=9&orientation=portrait" alt="Parfum Élégance Dorée" class="w-full h-64 object-cover object-top">
+<div class="absolute top-3 right-3 bg-primary text-white text-xs px-2 py-1 rounded">Bestseller</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-secondary mb-1">Élégance Dorée</h3>
+<p class="text-sm text-gray-500 mb-2">Eau de Parfum</p>
+<div class="flex items-center mb-3">
+<div class="flex text-primary">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-half-fill"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">(124)</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-secondary">89,00 €</span>
+<button class="add-to-cart-btn w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors">
+<i class="ri-add-line ri-lg"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Modern%20square%20perfume%20bottle%20with%20black%20cap%20on%20a%20dark%20gray%20background.%20The%20bottle%20has%20a%20contemporary%20geometric%20shape%20with%20a%20clear%20glass%20body%20containing%20light%20blue%20liquid.%20The%20image%20has%20a%20luxurious%20and%20sophisticated%20atmosphere%20with%20dramatic%20lighting%20and%20professional%20product%20photography%20style.%20High-end%20fashion%20photography%20with%20perfect%20lighting.&width=500&height=600&seq=10&orientation=portrait" alt="Parfum Mystère Azur" class="w-full h-64 object-cover object-top">
+<div class="absolute top-3 right-3 bg-secondary text-white text-xs px-2 py-1 rounded">Nouveau</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-secondary mb-1">Mystère Azur</h3>
+<p class="text-sm text-gray-500 mb-2">Eau de Toilette</p>
+<div class="flex items-center mb-3">
+<div class="flex text-primary">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-line"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">(87)</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-secondary">75,00 €</span>
+<button class="add-to-cart-btn w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors">
+<i class="ri-add-line ri-lg"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Luxurious%20round%20perfume%20bottle%20with%20crystal-like%20cap%20on%20a%20soft%20gold%20background.%20The%20bottle%20has%20an%20ornate%20design%20with%20a%20clear%20glass%20body%20containing%20rose-colored%20liquid.%20The%20image%20has%20a%20luxurious%20and%20romantic%20atmosphere%20with%20warm%20lighting%20and%20professional%20product%20photography%20style.%20High-end%20fashion%20photography%20with%20perfect%20lighting.&width=500&height=600&seq=11&orientation=portrait" alt="Parfum Rose Éternelle" class="w-full h-64 object-cover object-top">
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-secondary mb-1">Rose Éternelle</h3>
+<p class="text-sm text-gray-500 mb-2">Eau de Parfum</p>
+<div class="flex items-center mb-3">
+<div class="flex text-primary">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">(203)</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-secondary">95,00 €</span>
+<button class="add-to-cart-btn w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors">
+<i class="ri-add-line ri-lg"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Masculine%20rectangular%20perfume%20bottle%20with%20metal%20cap%20on%20a%20dark%20wood%20background.%20The%20bottle%20has%20a%20strong%2C%20modern%20shape%20with%20a%20tinted%20glass%20body%20containing%20amber-colored%20liquid.%20The%20image%20has%20a%20luxurious%20and%20sophisticated%20atmosphere%20with%20moody%20lighting%20and%20professional%20product%20photography%20style.%20High-end%20fashion%20photography%20with%20perfect%20lighting.&width=500&height=600&seq=12&orientation=portrait" alt="Parfum Bois d'Orient" class="w-full h-64 object-cover object-top">
+<div class="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded">-15%</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-secondary mb-1">Bois d'Orient</h3>
+<p class="text-sm text-gray-500 mb-2">Eau de Parfum Intense</p>
+<div class="flex items-center mb-3">
+<div class="flex text-primary">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-half-fill"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">(156)</span>
+</div>
+<div class="flex justify-between items-center">
+<div>
+<span class="text-lg font-bold text-secondary">85,00 €</span>
+<span class="text-sm text-gray-400 line-through ml-2">100,00 €</span>
+</div>
+<button class="add-to-cart-btn w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors">
+<i class="ri-add-line ri-lg"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 5 -->
+<div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Elegant%20perfume%20bottle%20with%20gold%20accents%20and%20floral%20design%20on%20a%20light%20marble%20background.%20The%20bottle%20has%20a%20feminine%20shape%20with%20a%20clear%20glass%20body%20containing%20pink-tinted%20liquid.%20The%20image%20has%20a%20luxurious%20and%20delicate%20atmosphere%20with%20soft%20lighting%20and%20professional%20product%20photography%20style.%20High-end%20fashion%20photography%20with%20perfect%20lighting.&width=500&height=600&seq=13&orientation=portrait" alt="Parfum Fleur de Soie" class="w-full h-64 object-cover object-top">
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-secondary mb-1">Fleur de Soie</h3>
+<p class="text-sm text-gray-500 mb-2">Eau de Parfum</p>
+<div class="flex items-center mb-3">
+<div class="flex text-primary">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-line"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">(92)</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-secondary">82,00 €</span>
+<button class="add-to-cart-btn w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors">
+<i class="ri-add-line ri-lg"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 6 -->
+<div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Modern%20unisex%20perfume%20bottle%20with%20minimalist%20design%20on%20a%20light%20gray%20background.%20The%20bottle%20has%20a%20sleek%20geometric%20shape%20with%20silver%20accents%20and%20contains%20clear%20liquid.%20The%20image%20has%20a%20contemporary%20and%20sophisticated%20atmosphere%20with%20clean%20lighting%20and%20professional%20product%20photography%20style.%20High-end%20fashion%20photography%20with%20perfect%20lighting.&width=500&height=600&seq=14&orientation=portrait" alt="Parfum L'Essence Pure" class="w-full h-64 object-cover object-top">
+<div class="absolute top-3 right-3 bg-secondary text-white text-xs px-2 py-1 rounded">Nouveau</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-secondary mb-1">L'Essence Pure</h3>
+<p class="text-sm text-gray-500 mb-2">Eau de Parfum</p>
+<div class="flex items-center mb-3">
+<div class="flex text-primary">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-half-fill"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">(45)</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-secondary">78,00 €</span>
+<button class="add-to-cart-btn w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors">
+<i class="ri-add-line ri-lg"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 7 -->
+<div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Masculine%20luxury%20perfume%20bottle%20with%20dark%20blue%20glass%20and%20silver%20cap%20on%20a%20black%20background.%20The%20bottle%20has%20a%20powerful%20geometric%20shape%20with%20metallic%20accents.%20The%20image%20has%20a%20luxurious%20and%20sophisticated%20atmosphere%20with%20dramatic%20lighting%20and%20professional%20product%20photography%20style.%20High-end%20fashion%20photography%20with%20perfect%20lighting.&width=500&height=600&seq=15&orientation=portrait" alt="Parfum Nuit Intense" class="w-full h-64 object-cover object-top">
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-secondary mb-1">Nuit Intense</h3>
+<p class="text-sm text-gray-500 mb-2">Eau de Parfum Intense</p>
+<div class="flex items-center mb-3">
+<div class="flex text-primary">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-line"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">(78)</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-secondary">92,00 €</span>
+<button class="add-to-cart-btn w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors">
+<i class="ri-add-line ri-lg"></i>
+</button>
+</div>
+</div>
+</div>
+<!-- Product 8 -->
+<div class="product-card bg-white rounded-lg overflow-hidden shadow-md">
+<div class="relative">
+<img src="https://readdy.ai/api/search-image?query=Luxury%20perfume%20bottle%20with%20gold%20filigree%20design%20on%20a%20champagne%20gold%20background.%20The%20bottle%20has%20an%20ornate%20vintage%20shape%20with%20intricate%20details%20and%20contains%20amber%20liquid.%20The%20image%20has%20a%20luxurious%20and%20timeless%20atmosphere%20with%20warm%20lighting%20and%20professional%20product%20photography%20style.%20High-end%20fashion%20photography%20with%20perfect%20lighting.&width=500&height=600&seq=16&orientation=portrait" alt="Parfum Or Impérial" class="w-full h-64 object-cover object-top">
+<div class="absolute top-3 right-3 bg-primary text-white text-xs px-2 py-1 rounded">Édition Limitée</div>
+</div>
+<div class="p-5">
+<h3 class="text-lg font-bold text-secondary mb-1">Or Impérial</h3>
+<p class="text-sm text-gray-500 mb-2">Eau de Parfum</p>
+<div class="flex items-center mb-3">
+<div class="flex text-primary">
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+<i class="ri-star-fill"></i>
+</div>
+<span class="text-xs text-gray-500 ml-1">(167)</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-lg font-bold text-secondary">120,00 €</span>
+<button class="add-to-cart-btn w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full hover:bg-opacity-90 transition-colors">
+<i class="ri-add-line ri-lg"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More Button -->
+<div class="text-center mt-12">
+</div>
+</div>
+</section>
+</main>
+</body>
+</html>
