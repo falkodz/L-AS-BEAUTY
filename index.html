@@ -326,6 +326,14 @@ function flyToCartEffect(imgSrc, evt) {
 document.addEventListener('DOMContentLoaded', function() {
   updateCartCount();
 });
+
+// Met à jour le compteur à chaque retour sur la page (navigation, retour arrière, etc.)
+window.addEventListener('focus', updateCartCount);
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'visible') {
+    updateCartCount();
+  }
+});
 </script>
 </body>
 </html>
