@@ -12,14 +12,106 @@
       min-height: 100vh;
     }
     .cart-card {
-      background: rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.97);
       border-radius: 20px;
       box-shadow: 0 8px 32px rgba(76,175,80,0.10);
       border: 1.5px solid #D4AF37;
       transition: box-shadow 0.2s;
+      display: flex;
+      flex-direction: row;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 1.5rem;
     }
-    .cart-card:hover {
-      box-shadow: 0 16px 40px rgba(76,175,80,0.18);
+    @media (max-width: 640px) {
+      .cart-card {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 1rem;
+        gap: 1rem;
+      }
+      .cart-card img {
+        margin: 0 auto;
+        width: 110px !important;
+        height: 110px !important;
+      }
+    }
+    .cart-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 2.5px solid #D4AF37;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(212,175,55,0.10);
+      transition: transform 0.2s;
+    }
+    .cart-card img:hover {
+      transform: scale(1.05);
+    }
+    .cart-product-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .cart-product-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #8B5A2B;
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.01em;
+    }
+    .cart-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    @media (max-width: 640px) {
+      .cart-actions {
+        justify-content: center;
+      }
+    }
+    .qty-btn {
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 1.3rem;
+      border-radius: 50%;
+      background: #f1f8e9;
+      color: #8B5A2B;
+      border: 1.5px solid #D4AF37;
+      font-weight: bold;
+      transition: background 0.2s, color 0.2s;
+    }
+    .qty-btn:hover {
+      background: #D4AF37;
+      color: #fff;
+    }
+    .cart-qty {
+      font-size: 1.2rem;
+      font-weight: 600;
+      min-width: 2rem;
+      display: inline-block;
+      text-align: center;
+    }
+    .remove-btn {
+      margin-left: 1rem;
+      color: #e53935;
+      font-size: 0.95rem;
+      font-weight: 500;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .remove-btn:hover {
+      color: #b71c1c;
+      text-decoration: underline;
     }
     .cart-bg {
       background: url('images/garden-bg.jpg'), linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
@@ -189,15 +281,15 @@
         return;
       }
       cartItems.innerHTML = cart.map((item, idx) => `
-        <div class="cart-card flex items-center p-4 md:p-6">
-          <img src="${item.image}" alt="${item.name}" class="w-24 h-24 object-cover rounded-lg mr-6 border-2 border-primary bg-white shadow">
-          <div class="flex-1">
-            <h3 class="text-xl font-semibold text-primary">${item.name}</h3>
-            <div class="flex items-center mt-2 gap-2">
-              <button onclick="changeQty(${idx}, -1)" class="w-8 h-8 rounded-full bg-gray-100 text-xl text-primary hover:bg-primary hover:text-white transition">-</button>
-              <span class="mx-2 text-lg">${item.qty}</span>
-              <button onclick="changeQty(${idx}, 1)" class="w-8 h-8 rounded-full bg-gray-100 text-xl text-primary hover:bg-primary hover:text-white transition">+</button>
-              <button onclick="removeItem(${idx})" class="ml-6 text-red-500 hover:underline text-sm">Supprimer</button>
+        <div class="cart-card">
+          <img src="${item.image}" alt="${item.name}">
+          <div class="cart-product-info">
+            <div class="cart-product-title">${item.name}</div>
+            <div class="cart-actions">
+              <button onclick="changeQty(${idx}, -1)" class="qty-btn" aria-label="Diminuer la quantité">-</button>
+              <span class="cart-qty">${item.qty}</span>
+              <button onclick="changeQty(${idx}, 1)" class="qty-btn" aria-label="Augmenter la quantité">+</button>
+              <button onclick="removeItem(${idx})" class="remove-btn">Supprimer</button>
             </div>
           </div>
         </div>
