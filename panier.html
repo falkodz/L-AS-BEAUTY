@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Votre Panier</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+    }
+    .cart-card {
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(76,175,80,0.10);
+      border: 1.5px solid #D4AF37;
+      transition: box-shadow 0.2s;
+    }
+    .cart-card:hover {
+      box-shadow: 0 16px 40px rgba(76,175,80,0.18);
+    }
+    .cart-bg {
+      background: url('images/garden-bg.jpg'), linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-blend-mode: lighten;
+      min-height: 100vh;
+    }
+    .primary-btn {
+      background: linear-gradient(90deg, #8B5A2B 60%, #D4AF37 100%);
+      color: #fff;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(212,175,55,0.08);
+    }
+    .primary-btn:hover {
+      background: linear-gradient(90deg, #D4AF37 60%, #8B5A2B 100%);
+      box-shadow: 0 4px 16px rgba(212,175,55,0.16);
+    }
+    .mini-form {
+      background: rgba(255,255,255,0.98);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(139,90,43,0.18);
+      border: 1.5px solid #8B5A2B;
+      padding: 2rem;
+      max-width: 420px;
+      margin: 0;
+      position: relative;
+      z-index: 51;
+      animation: popupAppear 0.3s cubic-bezier(.4,1.6,.6,1);
+    }
+    @keyframes popupAppear {
+      0% { transform: scale(0.8) translateY(40px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .popup-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.25);
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s;
+    }
+    .popup-bg.hidden {
+      display: none;
+    }
+    .merci-popup {
+      background: rgba(255,255,255,0.98);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(139,90,43,0.18);
+      border: 1.5px solid #8B5A2B;
+      padding: 2rem 2.5rem;
+      max-width: 420px;
+      margin: 0;
+      text-align: center;
+      position: relative;
+      z-index: 52;
+      animation: popupAppear 0.3s cubic-bezier(.4,1.6,.6,1);
+    }
+    .car {
+      display: inline-block;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      width: 90px;
+      height: 50px;
+      position: relative;
+    }
+    .car-body {
+      width: 70px;
+      height: 28px;
+      background: #8B5A2B;
+      border-radius: 12px 12px 18px 18px/18px 18px 12px 12px;
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+    .car-window {
+      width: 30px;
+      height: 16px;
+      background: #fff;
+      border-radius: 8px 8px 10px 10px/10px 10px 8px 8px;
+      position: absolute;
+      left: 28px;
+      top: 12px;
+      opacity: 0.8;
+    }
+    .wheel {
+      width: 18px;
+      height: 18px;
+      background: #222;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 0;
+      animation: wheelSpin 0.7s linear infinite;
+    }
+    .wheel.left { left: 14px; }
+    .wheel.right { right: 14px; }
+    @keyframes wheelSpin {
+      100% { transform: rotate(360deg);}
+    }
+  </style>
+</head>
+<body class="cart-bg">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl md:text-5xl font-bold text-center mb-8 text-primary" style="font-family: 'Playfair Display', serif;">
+      <i class="ri-shopping-basket-2-line mr-2"></i>Votre panier
+    </h1>
+    <div id="cartItems" class="space-y-6 mb-8"></div>
+    <div class="mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <span id="cartTotal" class="text-2xl font-semibold text-primary"></span>
+      <button id="checkoutBtn" class="primary-btn px-8 py-3 text-lg">Finaliser la commande</button>
+    </div>
+    <!-- Popup formulaire paiement -->
+    <div id="popupPaiement" class="popup-bg hidden">
+      <div id="paymentFormContainer" class="mini-form">
+        <h2 class="text-2xl font-semibold mb-6 text-center text-primary">Informations de paiement</h2>
+        <form id="paymentForm" class="flex flex-col gap-2">
+          <label for="name">Nom complet</label>
+          <input type="text" id="name" name="name" required class="p-2 border" placeholder="Votre nom complet">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required class="p-2 border" placeholder="Votre email">
+          <label for="address">Adresse de livraison</label>
+          <input type="text" id="address" name="address" required class="p-2 border" placeholder="Votre adresse">
+          <label for="payment">Mode de paiement</label>
+          <select id="payment" name="payment" required class="p-2 border">
+            <option value="">Choisir...</option>
+            <option value="cb">Carte bancaire</option>
+            <option value="paypal">PayPal</option>
+            <option value="livraison">Paiement à la livraison</option>
+          </select>
+          <button type="submit" class="primary-btn px-6 py-2 mt-4">Payer</button>
+        </form>
+      </div>
+    </div>
+    <!-- Popup Merci -->
+    <div id="merciPopup" class="popup-bg hidden">
+      <div class="merci-popup">
+        <div class="car">
+          <div class="car-body"></div>
+          <div class="car-window"></div>
+          <div class="wheel left"></div>
+          <div class="wheel right"></div>
+        </div>
+        <h2 class="text-2xl font-bold mb-2 text-primary">Merci pour votre commande !</h2>
+        <p class="mb-2 text-gray-700">Vous recevrez bientôt votre suivi de commande par mail.</p>
+        <button onclick="window.location.href='index.html'" class="primary-btn px-6 py-2 mt-4">Retour à la boutique</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    function renderCart() {
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      let cartItems = document.getElementById('cartItems');
+      if (cart.length === 0) {
+        cartItems.innerHTML = `
+          <div class="flex flex-col items-center justify-center py-16">
+            <i class="ri-leaf-line text-6xl text-primary mb-4"></i>
+            <p class="text-xl text-gray-700 mb-2">Votre panier est vide.</p>
+            <a href="index.html" class="primary-btn px-6 py-2 mt-4">Découvrir les parfums</a>
+          </div>
+        `;
+        document.getElementById('cartTotal').textContent = "";
+        document.getElementById('checkoutBtn').style.display = "none";
+        return;
+      }
+      cartItems.innerHTML = cart.map((item, idx) => `
+        <div class="cart-card flex items-center p-4 md:p-6">
+          <img src="${item.image}" alt="${item.name}" class="w-24 h-24 object-cover rounded-lg mr-6 border-2 border-primary bg-white shadow">
+          <div class="flex-1">
+            <h3 class="text-xl font-semibold text-primary">${item.name}</h3>
+            <div class="flex items-center mt-2 gap-2">
+              <button onclick="changeQty(${idx}, -1)" class="w-8 h-8 rounded-full bg-gray-100 text-xl text-primary hover:bg-primary hover:text-white transition">-</button>
+              <span class="mx-2 text-lg">${item.qty}</span>
+              <button onclick="changeQty(${idx}, 1)" class="w-8 h-8 rounded-full bg-gray-100 text-xl text-primary hover:bg-primary hover:text-white transition">+</button>
+              <button onclick="removeItem(${idx})" class="ml-6 text-red-500 hover:underline text-sm">Supprimer</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      // Offre spéciale 3 pour 36€
+      let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      let sets = Math.floor(totalQty / 3);
+      let remainder = totalQty % 3;
+      let totalPrice = sets * 36 + remainder * 17;
+      document.getElementById('cartTotal').textContent = "Total : " + totalPrice.toFixed(2) + " €";
+      document.getElementById('checkoutBtn').style.display = "inline-block";
+    }
+    function changeQty(idx, delta) {
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart[idx].qty += delta;
+      if (cart[idx].qty < 1) cart[idx].qty = 1;
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+    function removeItem(idx) {
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.splice(idx, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+    // Affiche le popup paiement
+    document.getElementById('checkoutBtn').addEventListener('click', function() {
+      document.getElementById('popupPaiement').classList.remove('hidden');
+    });
+    // Ferme le popup si on clique à l'extérieur du formulaire
+    document.getElementById('popupPaiement').addEventListener('click', function(e) {
+      if (e.target === this) this.classList.add('hidden');
+    });
+    // Soumission du formulaire
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('popupPaiement').classList.add('hidden');
+      document.getElementById('merciPopup').classList.remove('hidden');
+      localStorage.removeItem('cart');
+    });
+    // Ferme le popup merci si on clique à l'extérieur
+    document.getElementById('merciPopup').addEventListener('click', function(e) {
+      if (e.target === this) this.classList.add('hidden');
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      renderCart();
+    });
+  </script>
+</body>
+</html>

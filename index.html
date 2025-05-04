@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collection de Parfums</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#8B5A2B',secondary:'#D4AF37'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+  .parfum-card {
+  border: 2px solid #a5d6a7;
+  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.08);
+  background: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.parfum-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 16px 32px rgba(56, 142, 60, 0.15);
+  border-color: #66bb6a;
+}
+  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+font-family: 'Montserrat', sans-serif;
+background-color: #fcfcfc;
+}
+h1, h2, h3, h4 {
+font-family: 'Playfair Display', serif;
+}
+.modal {
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+z-index: 50;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+input[type="number"] {
+-moz-appearance: textfield;
+}
+.parfum-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+.custom-checkbox {
+display: flex;
+align-items: center;
+cursor: pointer;
+}
+.custom-checkbox input {
+position: absolute;
+opacity: 0;
+cursor: pointer;
+height: 0;
+width: 0;
+}
+.checkmark {
+height: 20px;
+width: 20px;
+background-color: #fff;
+border: 1px solid #ccc;
+border-radius: 4px;
+position: relative;
+}
+.custom-checkbox input:checked ~ .checkmark {
+background-color: #8B5A2B;
+border-color: #8B5A2B;
+}
+.checkmark:after {
+content: "";
+position: absolute;
+display: none;
+}
+.custom-checkbox input:checked ~ .checkmark:after {
+display: block;
+}
+.custom-checkbox .checkmark:after {
+left: 7px;
+top: 3px;
+width: 6px;
+height: 12px;
+border: solid white;
+border-width: 0 2px 2px 0;
+transform: rotate(45deg);
+}
+@keyframes cartFlash {
+  0% { opacity: 0.8; transform: scale(1);}
+  60% { opacity: 0.5; transform: scale(1.25);}
+  100% { opacity: 0; transform: scale(1.5);}
+}
+@keyframes flyToCart {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0) translateX(0);
+  }
+  60% {
+    opacity: 0.8;
+    transform: scale(1.2) translateY(-40px) translateX(40px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.3) translateY(var(--fly-y, -300px)) translateX(var(--fly-x, 300px));
+  }
+}
+.fly-img {
+  pointer-events: none;
+  z-index: 9999;
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(76,175,80,0.25);
+  animation: flyToCart 0.8s cubic-bezier(.4,1.6,.6,1) forwards;
+}
+</style>
+</head>
+<body>
+<header class="bg-white shadow-sm">
+<div class="container mx-auto px-4 py-4 flex justify-between items-center">
+<p class="text-6xl font-['Pacifico'] text-primary">L'AS BEAUTY</p>
+<nav class="hidden md:flex space-x-8">
+</nav>
+</div>
+<button class="md:hidden w-10 h-10 flex items-center justify-center">
+<i class="ri-menu-line ri-xl"></i>
+</button>
+</div>
+</div>
+</header>
+<main class="container mx-auto px-4 py-12">
+<section class="mb-16">
+<h1 class="text-4xl md:text-5xl font-semibold text-gray-900 mb-6 text-center">Notre Collection de Parfums</h1>
+<div class="text-center max-w-3xl mx-auto mb-12">
+<p class="text-gray-600 md:text-2xl">Découvrez notre collection exclusive de parfums de luxe. Chaque fragrance est soigneusement élaborée pour éveiller vos sens et révéler votre personnalité unique.</p>
+<div class="bg-gray-50 p-4 rounded-lg inline-block">
+<p class="text-lg md:text-3xl font-medium text-gray-900">Prix unique : 17€ le flacon</p>
+<p class="text-primary md:text-3xl font-medium">Offre spéciale : 36€ les 3 flacons</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Parfum 1 -->
+<div class="parfum-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+  <div class="h-50 overflow-hidden">
+    <img src="images/baccara.jpg" alt="Baccarat" class="w-full h-full object-cover object-center">
+  </div>
+  <div class="p-6 flex flex-col items-center">
+    <h3 class="text-xl font-semibold md:text-2xl text-center">Baccarat</h3>
+    <div class="flex justify-center items-center w-full">
+      <button class="bg-green-600 text-white px-4 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors"
+        onclick="addToCart('Baccarat', 'images/baccara.jpg')">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+<!-- Parfum 2 -->
+<div class="parfum-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+  <div class="h-50 overflow-hidden">
+    <img src="images/bois_argent.jpg" alt="Bois d'Argent" class="w-full h-full object-cover object-center">
+  </div>
+  <div class="p-6 flex flex-col items-center">
+    <h3 class="text-xl font-semibold md:text-2xl text-center">Bois d'Argent</h3>
+    <div class="flex justify-center items-center w-full">
+      <button class="bg-green-600 text-white px-4 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors"
+        onclick="addToCart('Bois d\'Argent', 'images/bois_argent.jpg')">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+<!-- Parfum 3 -->
+<div class="parfum-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+  <div class="h-50 overflow-hidden">
+    <img src="images/aisha.jpg" alt="Aisha" class="w-full h-full object-cover object-center">
+  </div>
+  <div class="p-6 flex flex-col items-center">
+    <h3 class="text-xl font-semibold md:text-2xl text-center">Aisha</h3>
+    <div class="flex justify-center items-center w-full">
+      <button class="bg-green-600 text-white px-4 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors"
+        onclick="addToCart('Aisha', 'images/aisha.jpg')">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+<!-- Parfum 4 -->
+<div class="parfum-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+  <div class="h-50 overflow-hidden">
+    <img src="images/scandale_f.jpg" alt="Scandale Femme" class="w-full h-full object-cover object-center">
+  </div>
+  <div class="p-6 flex flex-col items-center">
+    <h3 class="text-xl font-semibold md:text-2xl text-center">Scandale Femme</h3>
+    <div class="flex justify-center items-center w-full">
+      <button class="bg-green-600 text-white px-4 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors"
+        onclick="addToCart('Scandale Femme', 'images/scandale_f.jpg')">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+<!-- Parfum 5 -->
+<div class="parfum-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+  <div class="h-50 overflow-hidden">
+    <img src="images/scandale_h.jpg" alt="Scandale Homme" class="w-full h-full object-cover object-center">
+  </div>
+  <div class="p-6 flex flex-col items-center">
+    <h3 class="text-xl font-semibold md:text-2xl text-center">Scandale Homme</h3>
+    <div class="flex justify-center items-center w-full">
+      <button class="bg-green-600 text-white px-4 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors"
+        onclick="addToCart('Scandale Homme', 'images/scandale_h.jpg')">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+<!-- Parfum 6 -->
+<div class="parfum-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+  <div class="h-50 overflow-hidden">
+    <img src="images/robe_noire.jpg" alt="La petite robe noire" class="w-full h-full object-cover object-center">
+  </div>
+  <div class="p-6 flex flex-col items-center">
+    <h3 class="text-xl font-semibold md:text-2xl text-center">La petite robe noire</h3>
+    <div class="flex justify-center items-center w-full">
+      <button class="bg-green-600 text-white px-4 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors"
+        onclick="addToCart('La petite robe noire', 'images/robe_noire.jpg')">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+<!-- Parfum 7 -->
+<div class="parfum-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+  <div class="h-50 overflow-hidden">
+    <img src="images/kirke.jpg" alt="Kirke" class="w-full h-full object-cover object-center">
+  </div>
+  <div class="p-6 flex flex-col items-center">
+    <h3 class="text-xl font-semibold md:text-2xl text-center">Kirke</h3>
+    <div class="flex justify-center items-center w-full">
+      <button class="bg-green-600 text-white px-4 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors"
+        onclick="addToCart('Kirke', 'images/kirke.jpg')">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+<!-- Parfum 8 -->
+<div class="parfum-card bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300">
+  <div class="h-50 overflow-hidden">
+    <img src="images/vie_belle.jpg" alt="La vie est belle" class="w-full h-full object-cover object-center">
+  </div>
+  <div class="p-6 flex flex-col items-center">
+    <h3 class="text-xl font-semibold md:text-2xl text-center">La vie est belle</h3>
+    <div class="flex justify-center items-center w-full">
+      <button class="bg-green-600 text-white px-4 py-2 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-colors"
+        onclick="addToCart('La vie est belle', 'images/vie_belle.jpg')">Ajouter au panier</button>
+    </div>
+  </div>
+</div>
+<section>
+</main>
+<!-- Icône panier avec lien -->
+<a href="panier.html" id="cartIcon" class="fixed top-6 right-6 z-50">
+  <div class="relative w-12 h-12 flex items-center justify-center bg-primary text-white rounded-full shadow-lg cursor-pointer transition-transform duration-200" id="cartIconInner">
+    <i class="ri-shopping-bag-line ri-2x"></i>
+    <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full">0</span>
+    <span id="cartAddedFlash" class="absolute inset-0 rounded-full pointer-events-none" style="display:none;"></span>
+  </div>
+</a>
+<script>
+function addToCart(name, image) {
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  const found = cart.find(item => item.name === name);
+  if (found) {
+    found.qty += 1;
+  } else {
+    cart.push({ name, image, qty: 1 });
+  }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+  animateCartIcon();
+  flyToCartEffect(image, event);
+  flashCartIcon();
+}
+function updateCartCount() {
+  let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  document.getElementById('cartCount').textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+}
+function animateCartIcon() {
+  const icon = document.getElementById('cartIconInner');
+  icon.classList.add('scale-125', 'ring-4', 'ring-green-400');
+  setTimeout(() => {
+    icon.classList.remove('scale-125', 'ring-4', 'ring-green-400');
+  }, 400);
+}
+function flashCartIcon() {
+  const flash = document.getElementById('cartAddedFlash');
+  flash.style.display = 'block';
+  flash.style.background = 'rgba(76,175,80,0.25)';
+  flash.style.animation = 'cartFlash 0.5s';
+  setTimeout(() => {
+    flash.style.display = 'none';
+    flash.style.animation = '';
+  }, 500);
+}
+// Animation "fly to cart"
+function flyToCartEffect(imgSrc, evt) {
+  // Trouve la position du bouton cliqué
+  let e = evt || window.event;
+  let btn = e.target.closest('button');
+  let rectBtn = btn.getBoundingClientRect();
+  // Trouve la position du panier
+  let cart = document.getElementById('cartIconInner');
+  let rectCart = cart.getBoundingClientRect();
+  // Crée l'image volante
+  let img = document.createElement('img');
+  img.src = imgSrc;
+  img.className = 'fly-img';
+  img.style.left = rectBtn.left + 'px';
+  img.style.top = rectBtn.top + 'px';
+  // Calcule la distance à parcourir
+  let deltaX = rectCart.left + rectCart.width/2 - (rectBtn.left + rectBtn.width/2);
+  let deltaY = rectCart.top + rectCart.height/2 - (rectBtn.top + rectBtn.height/2);
+  img.style.setProperty('--fly-x', deltaX + 'px');
+  img.style.setProperty('--fly-y', deltaY + 'px');
+  document.body.appendChild(img);
+  setTimeout(() => {
+    img.remove();
+  }, 800);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  updateCartCount();
+});
+</script>
+</body>
+</html>
